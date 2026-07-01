@@ -4,6 +4,7 @@ import Features from "./components/Features";
 import Specs from "./components/Specs";
 import Gallery from "./components/Gallery";
 import Reviews from "./components/Reviews";
+import Newsletter from "./components/Newsletter";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Specs />
       <Gallery />
       <Reviews />
+      <Newsletter />
     </>
   );
 }
