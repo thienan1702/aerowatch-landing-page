@@ -7,6 +7,7 @@ import Specs from "./components/Specs";
 import Gallery from "./components/Gallery";
 import Reviews from "./components/Reviews";
 import Newsletter from "./components/Newsletter";
+import Chatbot from "./components/Chatbot";
 
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
       <Gallery />
       <Reviews />
       <Newsletter />
-
+      <Chatbot />
     </div>
   );
 }
