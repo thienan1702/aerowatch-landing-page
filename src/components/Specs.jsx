@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 export default function Specs() {
 
   const specs = [
@@ -31,15 +32,23 @@ export default function Specs() {
         ">
 
           {specs.map((item, index) => (
-            <div
+            <motion.div
               key={index}
-              className="
-                flex
-                justify-between
-                p-6
-                border-b
-                border-white/10
-              "
+              initial={{
+                opacity: 0,
+                x: -50
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0
+              }}
+              viewport={{
+                once: true
+              }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.05
+              }}
             >
               <span className="font-semibold">
                 {item[0]}
@@ -48,7 +57,7 @@ export default function Specs() {
               <span className="text-gray-400">
                 {item[1]}
               </span>
-            </div>
+            </motion.div>
           ))}
 
         </div>

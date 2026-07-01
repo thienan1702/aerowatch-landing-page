@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 
 export default function Reviews() {
@@ -31,17 +32,23 @@ export default function Reviews() {
         <div className="grid md:grid-cols-3 gap-8">
 
           {reviews.map((item, index) => (
-            <div
+            <motion.div
               key={index}
-              className="
-                bg-slate-900
-                p-8
-                rounded-3xl
-                border
-                border-white/10
-                hover:-translate-y-2
-                duration-300
-              "
+              initial={{
+                opacity: 0,
+                scale: 0.8
+              }}
+              whileInView={{
+                opacity: 1,
+                scale: 1
+              }}
+              viewport={{
+                once: true
+              }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.2
+              }}
             >
               <div className="flex gap-1 mb-5">
                 <Star fill="currentColor" />
@@ -58,7 +65,7 @@ export default function Reviews() {
               <h3 className="font-bold">
                 {item.name}
               </h3>
-            </div>
+            </motion.div>
           ))}
 
         </div>

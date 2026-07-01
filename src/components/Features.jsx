@@ -1,5 +1,5 @@
+import { motion } from "framer-motion";
 import { Heart, Battery, Bluetooth } from "lucide-react";
-
 export default function Features() {
 
   const features = [
@@ -34,8 +34,23 @@ export default function Features() {
         <div className="grid md:grid-cols-3 gap-8">
 
           {features.map((item, index) => (
-            <div
+            <motion.div
               key={index}
+              initial={{
+                opacity: 0,
+                y: 80
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0
+              }}
+              viewport={{
+                once: true
+              }}
+              transition={{
+                duration: 0.8,
+                delay: index * 0.2
+              }}
               className="
                 bg-slate-900
                 p-10
@@ -57,7 +72,7 @@ export default function Features() {
               <p className="text-gray-400">
                 {item.desc}
               </p>
-            </div>
+            </motion.div>
           ))}
 
         </div>

@@ -3,7 +3,15 @@ import { motion } from "framer-motion";
 export default function Hero() {
 
   return (
-    <section className="min-h-screen flex items-center justify-center">
+    <section
+    className="
+    min-h-screen
+    flex
+    items-center
+    justify-center
+    bg-gradient-to-b
+    from-[#050816]
+    to-black">
 
       <div className="text-center">
 
