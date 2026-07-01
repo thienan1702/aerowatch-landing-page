@@ -8,6 +8,7 @@ import Gallery from "./components/Gallery";
 import Reviews from "./components/Reviews";
 import Newsletter from "./components/Newsletter";
 import Chatbot from "./components/Chatbot";
+import Footer from "./components/Footer";
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
       <Reviews />
       <Newsletter />
       <Chatbot />
+      <Footer />
     </div>
   );
 }
