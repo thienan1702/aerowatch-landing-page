@@ -1,14 +1,30 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+  lazy,
+  Suspense
+} from "react";
 import toast from "react-hot-toast";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Features from "./components/Features";
 import Specs from "./components/Specs";
-import Gallery from "./components/Gallery";
-import Reviews from "./components/Reviews";
-import Newsletter from "./components/Newsletter";
-import Chatbot from "./components/Chatbot";
+const Gallery = lazy(() =>
+  import("./components/Gallery")
+);
+
+const Reviews = lazy(() =>
+  import("./components/Reviews")
+);
+
+const Newsletter = lazy(() =>
+  import("./components/Newsletter")
+);
+
+const Chatbot = lazy(() =>
+  import("./components/Chatbot")
+);
 import Footer from "./components/Footer";
 import Products from "./components/Products";
 import RecentlyViewed from "./components/RecentlyViewed";
@@ -100,11 +116,22 @@ function App() {
       <Features />
       <Products />
       <Specs />
-      <Gallery />
       <RecentlyViewed />
-      <Reviews />
-      <Newsletter />
-      <Chatbot />
+      <Suspense fallback={null}>
+  <Gallery />
+</Suspense>
+
+<Suspense fallback={null}>
+  <Reviews />
+</Suspense>
+
+<Suspense fallback={null}>
+  <Newsletter />
+</Suspense>
+
+<Suspense fallback={null}>
+  <Chatbot />
+</Suspense>
       <Footer />
 
     </div>
