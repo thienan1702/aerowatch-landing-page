@@ -1,4 +1,5 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { Mail } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -14,9 +15,20 @@ export default function Footer() {
         </p>
 
         <div className="flex justify-center gap-6 mb-8">
-          <Github className="cursor-pointer hover:scale-110 duration-300" />
-          <Linkedin className="cursor-pointer hover:scale-110 duration-300" />
-          <Mail className="cursor-pointer hover:scale-110 duration-300" />
+          <FaGithub
+            size={24}
+            className="cursor-pointer hover:scale-110 duration-300"
+          />
+
+          <FaLinkedin
+            size={24}
+            className="cursor-pointer hover:scale-110 duration-300"
+          />
+
+          <Mail
+            size={24}
+            className="cursor-pointer hover:scale-110 duration-300"
+          />
         </div>
 
         <p className="text-gray-500">
