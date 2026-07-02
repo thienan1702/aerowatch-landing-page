@@ -1,7 +1,35 @@
+import { Heart, ShoppingCart } from "lucide-react";
+import { useEffect, useState } from "react";
+
 export default function Navbar({
   dark,
   setDark
 }) {
+
+  const [wishlistCount, setWishlistCount] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+
+    const updateCounts = () => {
+
+      const wishlist =
+        JSON.parse(localStorage.getItem("wishlist")) || [];
+
+      const cart =
+        JSON.parse(localStorage.getItem("cart")) || [];
+
+      setWishlistCount(wishlist.length);
+      setCartCount(cart.length);
+    };
+
+    updateCounts();
+
+    const interval = setInterval(updateCounts, 500);
+
+    return () => clearInterval(interval);
+
+  }, []);
 
   return (
     <nav
@@ -46,6 +74,49 @@ export default function Navbar({
             Reviews
           </a>
 
+          {/* Wishlist */}
+          <div className="relative cursor-pointer">
+
+            <Heart size={22} />
+
+            <span
+              className="
+              absolute
+              -top-2
+              -right-2
+              bg-red-500
+              text-white
+              text-xs
+              rounded-full
+              px-1"
+            >
+              {wishlistCount}
+            </span>
+
+          </div>
+
+          {/* Cart */}
+          <div className="relative cursor-pointer">
+
+            <ShoppingCart size={22} />
+
+            <span
+              className="
+              absolute
+              -top-2
+              -right-2
+              bg-blue-500
+              text-white
+              text-xs
+              rounded-full
+              px-1"
+            >
+              {cartCount}
+            </span>
+
+          </div>
+
+          {/* Dark Mode */}
           <button
             onClick={() => setDark(!dark)}
             className="

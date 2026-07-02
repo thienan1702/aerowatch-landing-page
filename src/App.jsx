@@ -9,6 +9,8 @@ import Reviews from "./components/Reviews";
 import Newsletter from "./components/Newsletter";
 import Chatbot from "./components/Chatbot";
 import Footer from "./components/Footer";
+import Products from "./components/Products";
+import RecentlyViewed from "./components/RecentlyViewed";
 
 function App() {
 
@@ -33,8 +35,10 @@ function App() {
 
       <Hero />
       <Features />
+      <Products />
       <Specs />
       <Gallery />
+      <RecentlyViewed />
       <Reviews />
       <Newsletter />
       <Chatbot />
