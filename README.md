@@ -10,6 +10,9 @@ A modern smartwatch landing page built with React, Vite, TailwindCSS, and Framer
 - Product Features
 - Product Specifications
 - Image Gallery
+- Wishlist
+- Shopping Cart
+- Recently Viewed Products
 - Customer Reviews
 - Newsletter Subscription
 - AI Chatbot Assistant
@@ -25,7 +28,9 @@ A modern smartwatch landing page built with React, Vite, TailwindCSS, and Framer
 - Lucide React
 - React Icons
 - React Hot Toast
-
+- Git
+- GitHub
+- Vercel
 ## Installation
 
 ```bash
@@ -41,4 +46,4 @@ npm run build
 
 ## Author
 
-Nguyen An
+Nguyen Phu Thien An
