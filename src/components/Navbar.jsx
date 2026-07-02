@@ -32,7 +32,7 @@ export default function Navbar({
           AeroWatch X1
         </h1>
 
-        <div className="flex gap-6 items-center">
+        <div className="hidden md:flex gap-6 items-center">
 
           <a href="#features">
             Features

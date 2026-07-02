@@ -19,7 +19,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 80 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-6xl md:text-8xl font-bold"
+          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold"
         >
           AeroWatch X1
         </motion.h1>
@@ -33,7 +33,7 @@ export default function Hero() {
           The Future On Your Wrist
         </motion.p>
 
-        <div className="mt-10 flex justify-center gap-5">
+        <div className="mt-10 flex flex-col sm:flex-row justify-center gap-5">
 
           <button className="bg-blue-600 px-8 py-4 rounded-xl hover:scale-105 duration-300">
             Buy Now
