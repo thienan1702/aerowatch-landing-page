@@ -1,28 +1,107 @@
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export default function Newsletter() {
 
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
 
-    if (!email.includes("@")) {
-      toast.error("Please enter a valid email!");
-      return;
+  e.preventDefault();
+
+  // validation
+  const emailRegex =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(email)) {
+
+    toast.error(
+      "Please enter a valid email!"
+    );
+
+    return;
+  }
+
+  try {
+
+    const response = await fetch(
+      "https://webhook.site/0da2d937-e09d-4953-b2be-19a60e1773fe",
+      {
+        method: "POST",
+        mode: "no-cors",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          email,
+
+          action:
+            "newsletter_subscription",
+
+          timestamp:
+            new Date()
+              .toISOString(),
+
+          currentPage:
+            window.location.href,
+
+          userAgent:
+            navigator.userAgent,
+
+          screen:
+            `${window.innerWidth}x${window.innerHeight}`,
+
+          theme:
+            localStorage.getItem(
+              "theme"
+            ),
+
+          lastViewed:
+            JSON.parse(
+              localStorage.getItem(
+                "recentlyViewed"
+              ) || "[]"
+            )
+
+        })
+      }
+    );
+
+     {
+
+        toast.success(
+        "Successfully subscribed!"
+      );
+
+      setEmail("");
+
+      console.log(
+        "Webhook sent"
+      );
     }
+    
 
-    toast.success("Successfully subscribed!");
-    setEmail("");
-  };
+  }
+  catch (error) {
+
+    console.error(error);
+
+    toast.error(
+      "Failed to submit."
+    );
+
+  }
+};
 
   return (
     <section
       id="contact"
       className="py-32 px-8"
     >
-      <Toaster />
 
       <div className="max-w-3xl mx-auto text-center">
 
