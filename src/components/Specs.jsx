@@ -1,15 +1,58 @@
 import { motion } from "framer-motion";
+import {
+  Monitor,
+  Cpu,
+  Battery,
+  Bluetooth,
+  Shield,
+  Weight,
+  Smartphone,
+  Zap
+} from "lucide-react";
+
 export default function Specs() {
 
   const specs = [
-    ["Display", "1.96-inch AMOLED"],
-    ["Resolution", "466 × 466"],
-    ["Processor", "Snapdragon Wear"],
-    ["Battery", "500mAh"],
-    ["Battery Life", "Up to 14 days"],
-    ["Connectivity", "Bluetooth 5.4"],
-    ["Water Resistance", "IP68"],
-    ["Weight", "39g"]
+    {
+      icon: Monitor,
+      title: "Display",
+      value: "1.96-inch AMOLED"
+    },
+    {
+      icon: Smartphone,
+      title: "Resolution",
+      value: "466 × 466"
+    },
+    {
+      icon: Cpu,
+      title: "Processor",
+      value: "Snapdragon Wear"
+    },
+    {
+      icon: Battery,
+      title: "Battery",
+      value: "500mAh"
+    },
+    {
+      icon: Zap,
+      title: "Battery Life",
+      value: "Up to 14 days"
+    },
+    {
+      icon: Bluetooth,
+      title: "Connectivity",
+      value: "Bluetooth 5.4"
+    },
+    {
+      icon: Shield,
+      title: "Water Resistance",
+      value: "IP68"
+    },
+    {
+      icon: Weight,
+      title: "Weight",
+      value: "39g"
+    }
   ];
 
   return (
@@ -17,48 +60,103 @@ export default function Specs() {
       id="specs"
       className="py-32 px-8"
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto">
 
-        <h2 className="text-5xl font-bold text-center mb-20">
-          Specifications
-        </h2>
+        <motion.h2
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="
+            text-5xl
+            font-bold
+            text-center
+            mb-20"
+        >
+          Technical Specifications
+        </motion.h2>
 
-        <div className="
-          bg-slate-900
-          rounded-3xl
-          overflow-hidden
-          border
-          border-white/10
-        ">
+        <div
+          className="
+            grid
+            grid-cols-1
+            md:grid-cols-2
+            lg:grid-cols-4
+            gap-8"
+        >
 
-          {specs.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{
-                opacity: 0,
-                x: -50
-              }}
-              whileInView={{
-                opacity: 1,
-                x: 0
-              }}
-              viewport={{
-                once: true
-              }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.05
-              }}
-            >
-              <span className="font-semibold">
-                {item[0]}
-              </span>
+          {specs.map((spec, index) => {
 
-              <span className="text-gray-400">
-                {item[1]}
-              </span>
-            </motion.div>
-          ))}
+            const Icon = spec.icon;
+
+            return (
+              <motion.div
+                key={index}
+                initial={{
+                  opacity: 0,
+                  y: 50
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0
+                }}
+                viewport={{
+                  once: true
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1
+                }}
+                whileHover={{
+                  y: -8,
+                  scale: 1.03
+                }}
+                className="
+                  bg-slate-900/70
+                  backdrop-blur-lg
+                  border
+                  border-white/10
+                  rounded-3xl
+                  p-8
+                  transition-all
+                  duration-300"
+              >
+
+                <div
+                  className="
+                    w-14
+                    h-14
+                    rounded-2xl
+                    bg-blue-600/20
+                    flex
+                    items-center
+                    justify-center
+                    mb-6"
+                >
+                  <Icon
+                    size={28}
+                    className="text-blue-400"
+                  />
+                </div>
+
+                <p
+                  className="
+                    text-gray-400
+                    mb-2"
+                >
+                  {spec.title}
+                </p>
+
+                <h3
+                  className="
+                    text-xl
+                    font-bold"
+                >
+                  {spec.value}
+                </h3>
+
+              </motion.div>
+            );
+          })}
 
         </div>
 
