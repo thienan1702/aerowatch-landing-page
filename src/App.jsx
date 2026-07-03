@@ -100,11 +100,14 @@ function App() {
 
   return (
     <div
-      className={
-        dark
-          ? "bg-[#050816] text-white"
-          : "bg-white text-black"
-      }
+  className={`
+    min-h-screen
+    ${
+      dark
+        ? "bg-[#050816] text-white"
+        : "bg-white text-black"
+    }
+    `}
     >
 
       <Navbar
@@ -112,7 +115,7 @@ function App() {
         setDark={setDark}
       />
 
-      <Hero />
+      <Hero dark={dark} />
       <Features />
       <Products />
       <Specs />

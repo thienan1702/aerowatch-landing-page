@@ -6,54 +6,77 @@ export default function Navbar({
   setDark
 }) {
 
-  const [wishlistCount, setWishlistCount] = useState(0);
-  const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] =
+    useState(0);
+
+  const [cartCount, setCartCount] =
+    useState(0);
 
   useEffect(() => {
 
     const updateCounts = () => {
 
       const wishlist =
-        JSON.parse(localStorage.getItem("wishlist")) || [];
+        JSON.parse(
+          localStorage.getItem("wishlist")
+        ) || [];
 
       const cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
+        JSON.parse(
+          localStorage.getItem("cart")
+        ) || [];
 
-      setWishlistCount(wishlist.length);
-      setCartCount(cart.length);
+      setWishlistCount(
+        wishlist.length
+      );
+
+      setCartCount(
+        cart.length
+      );
     };
 
     updateCounts();
 
-    const interval = setInterval(updateCounts, 500);
+    window.addEventListener(
+      "storageUpdate",
+      updateCounts
+    );
 
-    return () => clearInterval(interval);
+    return () =>
+      window.removeEventListener(
+        "storageUpdate",
+        updateCounts
+      );
 
   }, []);
 
   return (
     <nav
-      className="
-      fixed
-      top-0
-      left-0
-      w-full
-      z-50
-      bg-black/30
-      backdrop-blur-lg
-      border-b
-      border-white/10"
+      className={`
+        fixed
+        top-0
+        left-0
+        w-full
+        z-50
+        backdrop-blur-lg
+        border-b
+        ${
+          dark
+            ? "bg-black/30 border-white/10"
+            : "bg-white/80 border-black/10"
+        }
+      `}
     >
 
       <div
         className="
-        max-w-7xl
-        mx-auto
-        flex
-        justify-between
-        items-center
-        px-8
-        py-5"
+          max-w-7xl
+          mx-auto
+          flex
+          justify-between
+          items-center
+          px-8
+          py-5"
       >
 
         <h1 className="text-2xl font-bold">
@@ -75,58 +98,74 @@ export default function Navbar({
           </a>
 
           {/* Wishlist */}
-          <div className="relative cursor-pointer">
+          <div className="relative">
 
-            <Heart size={22} />
+            <Heart
+              size={22}
+              className="cursor-pointer"
+            />
 
-            <span
-              className="
-              absolute
-              -top-2
-              -right-2
-              bg-red-500
-              text-white
-              text-xs
-              rounded-full
-              px-1"
-            >
-              {wishlistCount}
-            </span>
+            {wishlistCount > 0 && (
+              <span
+                className="
+                  absolute
+                  -top-2
+                  -right-2
+                  bg-red-500
+                  text-white
+                  text-xs
+                  rounded-full
+                  px-1"
+              >
+                {wishlistCount}
+              </span>
+            )}
 
           </div>
 
           {/* Cart */}
-          <div className="relative cursor-pointer">
+          <div className="relative">
 
-            <ShoppingCart size={22} />
+            <ShoppingCart
+              size={22}
+              className="cursor-pointer"
+            />
 
-            <span
-              className="
-              absolute
-              -top-2
-              -right-2
-              bg-blue-500
-              text-white
-              text-xs
-              rounded-full
-              px-1"
-            >
-              {cartCount}
-            </span>
+            {cartCount > 0 && (
+              <span
+                className="
+                  absolute
+                  -top-2
+                  -right-2
+                  bg-blue-500
+                  text-white
+                  text-xs
+                  rounded-full
+                  px-1"
+              >
+                {cartCount}
+              </span>
+            )}
 
           </div>
 
-          {/* Dark Mode */}
+          {/* Dark mode */}
           <button
-            onClick={() => setDark(!dark)}
-            className="
-            border
-            px-4
-            py-2
-            rounded-lg
-            hover:bg-white
-            hover:text-black
-            duration-300"
+            onClick={() =>
+              setDark(!dark)
+            }
+            className={`
+              border
+              px-4
+              py-2
+              rounded-lg
+              duration-300
+              ${
+                dark
+                  ? "hover:bg-white hover:text-black"
+                  : "hover:bg-black hover:text-white"
+              }
+            `}
           >
             {dark ? "☀️" : "🌙"}
           </button>

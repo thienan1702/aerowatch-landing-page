@@ -1,15 +1,9 @@
 import { useState } from "react";
-import Fuse from "fuse.js";
 import { products } from "../data/products";
-let ai = null;
 
-const fuse = new Fuse(products, {
-  keys: [
-    "name",
-    "description"
-  ],
-  threshold: 0.4
-});
+let ai = null;
+let fuse = null;
+
 async function getAI() {
 
   if (!ai) {
@@ -30,75 +24,116 @@ async function getAI() {
   return ai;
 }
 
+async function getFuse() {
+
+  if (!fuse) {
+
+    const Fuse =
+      (await import(
+        "fuse.js"
+      )).default;
+
+    fuse = new Fuse(
+      products,
+      {
+        keys: [
+          "name",
+          "description"
+        ],
+        threshold: 0.4
+      }
+    );
+  }
+
+  return fuse;
+}
+
 export default function Chatbot() {
 
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [open, setOpen] =
+    useState(false);
 
-  const [chat, setChat] = useState([
-    {
-      role: "bot",
-      text:
-        "Hi! I'm AeroWatch AI Assistant."
-    }
-  ]);
+  const [message, setMessage] =
+    useState("");
 
-  const handleSend = async () => {
+  const [loading, setLoading] =
+    useState(false);
 
-    if (!message.trim()) return;
-
-    const userMessage = {
-      role: "user",
-      text: message
-    };
-
-    setChat(prev => [
-      ...prev,
-      userMessage
+  const [chat, setChat] =
+    useState([
+      {
+        role: "bot",
+        text:
+          "Hi! I'm AeroWatch AI Assistant."
+      }
     ]);
 
-    const question = message;
+  const handleSend =
+    async () => {
 
-    setMessage("");
+      if (!message.trim())
+        return;
 
-    try {
+      const question =
+        message;
 
-      const search =
-        fuse.search(question);
+      setChat(prev => [
+        ...prev,
+        {
+          role: "user",
+          text: question
+        }
+      ]);
 
-      // tìm thấy sản phẩm
-      if (search.length > 0) {
+      setMessage("");
 
-        const p =
-          search[0].item;
+      try {
 
-        setChat(prev => [
-          ...prev,
-          {
-            role: "bot",
-            text:
+        const searcher =
+          await getFuse();
+
+        const search =
+          searcher.search(
+            question
+          );
+
+        if (
+          search.length > 0
+        ) {
+
+          const p =
+            search[0].item;
+
+          setChat(prev => [
+            ...prev,
+            {
+              role: "bot",
+              text:
 `Product: ${p.name}
 
 Price: $${p.price}
 Battery: ${p.battery}
 Display: ${p.display}
 Bluetooth: ${p.bluetooth}
-GPS: ${p.gps ? "Yes" : "No"}
+GPS: ${
+  p.gps
+    ? "Yes"
+    : "No"
+}
 
 ${p.description}`
-          }
-        ]);
+            }
+          ]);
 
-        return;
-      }
+          return;
+        }
 
-      setLoading(true);
+        setLoading(true);
 
-      const catalog =
-        products
-          .map(
-            p => `
+        const catalog =
+          products
+            .map(
+              p => `
 Name: ${p.name}
 Price: $${p.price}
 Battery: ${p.battery}
@@ -107,63 +142,71 @@ Bluetooth: ${p.bluetooth}
 GPS: ${p.gps}
 Description: ${p.description}
 `
-          )
-          .join("\n");
+            )
+            .join("\n");
 
-      const prompt = `
+        const prompt =
+`
 You are AeroWatch AI Assistant.
 
 Available products:
 
 ${catalog}
 
-Answer the user's question professionally.
+Answer professionally.
 
 Question:
 ${question}
 `;
 
-      const gemini =
-  await getAI();
+        const gemini =
+          await getAI();
 
-      const response =
-  await gemini.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: prompt
-        });
+        const response =
+          await gemini.models.generateContent({
+            model:
+              "gemini-2.5-flash",
+            contents:
+              prompt
+          });
 
-      setChat(prev => [
-        ...prev,
-        {
-          role: "bot",
-          text: response.text
-        }
-      ]);
+        setChat(prev => [
+          ...prev,
+          {
+            role: "bot",
+            text:
+              response.text
+          }
+        ]);
 
-    }
-    catch {
+      }
+      catch {
 
-      setChat(prev => [
-        ...prev,
-        {
-          role: "bot",
-          text:
-            "Sorry, AI service is unavailable."
-        }
-      ]);
+        setChat(prev => [
+          ...prev,
+          {
+            role: "bot",
+            text:
+              "Sorry, AI service is unavailable."
+          }
+        ]);
 
-    }
-    finally {
+      }
+      finally {
 
-      setLoading(false);
+        setLoading(
+          false
+        );
 
-    }
-  };
+      }
+    };
 
   return (
     <>
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() =>
+          setOpen(!open)
+        }
         className="
           fixed
           bottom-6
@@ -196,51 +239,82 @@ ${question}
             z-50"
         >
 
-          <div className="p-4 font-bold border-b border-white/10">
+          <div
+            className="
+            p-4
+            font-bold
+            border-b
+            border-white/10"
+          >
             AeroWatch AI
           </div>
 
-          <div className="flex-1 overflow-auto p-4">
+          <div
+            className="
+            flex-1
+            overflow-auto
+            p-4"
+          >
 
-            {chat.map((item, index) => (
+            {chat.map(
+              (
+                item,
+                index
+              ) => (
 
-              <div
-                key={index}
-                className={`mb-3 ${
-                  item.role === "user"
-                    ? "text-right"
-                    : "text-left"
-                }`}
-              >
+                <div
+                  key={index}
+                  className={`mb-3 ${
+                    item.role ===
+                    "user"
+                      ? "text-right"
+                      : "text-left"
+                  }`}
+                >
 
-                <span className="bg-black/30 p-2 rounded-lg inline-block">
-                  {item.text}
-                </span>
+                  <span
+                    className="
+                    bg-black/30
+                    p-2
+                    rounded-lg
+                    inline-block"
+                  >
+                    {item.text}
+                  </span>
 
-              </div>
-
-            ))}
+                </div>
+              )
+            )}
 
             {loading && (
 
               <div className="text-gray-400">
-                AeroWatch AI is typing...
+                AeroWatch AI
+                is typing...
               </div>
 
             )}
 
           </div>
 
-          <div className="p-3 flex gap-2">
+          <div
+            className="
+            p-3
+            flex
+            gap-2"
+          >
 
             <input
               value={message}
-              onChange={(e) =>
-                setMessage(e.target.value)
+              onChange={e =>
+                setMessage(
+                  e.target.value
+                )
               }
-              onKeyDown={(e) =>
-                e.key === "Enter"
-                  && handleSend()
+              onKeyDown={e =>
+                e.key ===
+                  "Enter" &&
+                handleSend()
               }
               className="
                 flex-1
@@ -252,7 +326,9 @@ ${question}
             />
 
             <button
-              onClick={handleSend}
+              onClick={
+                handleSend
+              }
               className="
                 bg-blue-600
                 px-4
@@ -264,7 +340,6 @@ ${question}
           </div>
 
         </div>
-
       )}
     </>
   );

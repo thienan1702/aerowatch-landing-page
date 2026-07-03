@@ -1,17 +1,31 @@
 import { motion } from "framer-motion";
 
-export default function Hero() {
+export default function Hero({ dark }) {
 
   return (
-    <section
-    className="
-    min-h-screen
-    flex
-    items-center
-    justify-center
-    bg-gradient-to-b
-    from-[#050816]
-    to-black">
+   <section
+  className={
+    dark
+      ? `
+        min-h-screen
+        flex
+        items-center
+        justify-center
+        bg-gradient-to-b
+        from-[#050816]
+        to-black
+      `
+      : `
+        min-h-screen
+        flex
+        items-center
+        justify-center
+        bg-gradient-to-b
+        from-gray-100
+        to-white
+      `
+  }
+>
 
       <div className="text-center">
 
@@ -19,8 +33,15 @@ export default function Hero() {
           initial={{ opacity: 0, y: 80 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold"
-        >
+          className=
+          {`
+            text-4xl
+            sm:text-5xl
+            md:text-7xl
+            lg:text-8xl
+            font-bold
+            ${dark ? "text-white" : "text-black"}
+          `}        >
           AeroWatch X1
         </motion.h1>
 
@@ -28,7 +49,11 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="mt-6 text-xl text-gray-300"
+          className={`mt-6 text-xl ${
+          dark
+              ? "text-gray-300"
+              : "text-gray-700"
+          }`}
         >
           The Future On Your Wrist
         </motion.p>
@@ -39,8 +64,20 @@ export default function Hero() {
             Buy Now
           </button>
 
-          <button className="border border-white px-8 py-4 rounded-xl hover:bg-white hover:text-black duration-300">
-            Watch Demo
+          <button
+            className={`
+              border
+              px-8
+              py-4
+              rounded-xl
+              duration-300
+              ${
+                dark
+                  ? "border-white hover:bg-white hover:text-black"
+                  : "border-black hover:bg-black hover:text-white"
+              }
+            `}
+>            Watch Demo
           </button>
 
         </div>
