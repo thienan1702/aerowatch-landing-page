@@ -22,9 +22,7 @@ const Newsletter = lazy(() =>
   import("./components/Newsletter")
 );
 
-const Chatbot = lazy(() =>
-  import("./components/Chatbot")
-);
+import Chatbot from "./components/Chatbot";
 import Footer from "./components/Footer";
 import Products from "./components/Products";
 import RecentlyViewed from "./components/RecentlyViewed";
