@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { GoogleGenAI } from "@google/genai";
 import Fuse from "fuse.js";
 import { products } from "../data/products";
-let ai = null;
+
 const ai = new GoogleGenAI({
   apiKey: import.meta.env.VITE_GEMINI_API_KEY
 });
@@ -13,25 +14,6 @@ const fuse = new Fuse(products, {
   ],
   threshold: 0.4
 });
-async function getAI() {
-
-  if (!ai) {
-
-    const {
-      GoogleGenAI
-    } = await import(
-      "@google/genai"
-    );
-
-    ai = new GoogleGenAI({
-      apiKey:
-        import.meta.env
-          .VITE_GEMINI_API_KEY
-    });
-  }
-
-  return ai;
-}
 
 export default function Chatbot() {
 
@@ -126,11 +108,8 @@ Question:
 ${question}
 `;
 
-      const gemini =
-  await getAI();
-
-const response =
-  await gemini.models.generateContent({
+      const response =
+        await ai.models.generateContent({
           model: "gemini-2.5-flash",
           contents: prompt
         });
