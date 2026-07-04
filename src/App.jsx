@@ -8,8 +8,12 @@ import toast from "react-hot-toast";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Features from "./components/Features";
-import Specs from "./components/Specs";
+const Features = lazy(() =>
+  import("./components/Features")
+);
+const Specs = lazy(() =>
+  import("./components/Specs")
+);
 const Gallery = lazy(() =>
   import("./components/Gallery")
 );
@@ -22,10 +26,16 @@ const Newsletter = lazy(() =>
   import("./components/Newsletter")
 );
 
-import Chatbot from "./components/Chatbot";
+const Chatbot = lazy(() =>
+  import("./components/Chatbot")
+);
 import Footer from "./components/Footer";
-import Products from "./components/Products";
-import RecentlyViewed from "./components/RecentlyViewed";
+const Products = lazy(() =>
+  import("./components/Products")
+);
+const RecentlyViewed = lazy(() =>
+  import("./components/RecentlyViewed")
+);
 
 function App() {
 
@@ -114,10 +124,22 @@ function App() {
       />
 
       <Hero dark={dark} />
-      <Features />
-      <Products />
-      <Specs />
-      <RecentlyViewed />
+
+<Suspense fallback={null}>
+    <Features />
+</Suspense>
+
+<Suspense fallback={null}>
+    <Products />
+</Suspense>
+
+<Suspense fallback={null}>
+    <Specs />
+</Suspense>
+
+<Suspense fallback={null}>
+    <RecentlyViewed />
+</Suspense>
       <Suspense fallback={null}>
   <Gallery />
 </Suspense>
