@@ -185,6 +185,7 @@ ${p.description}`
     <>
       {/* Open Button */}
       <button
+      aria-label="Open AI chatbot"
         onClick={() =>
           setOpen(!open)
         }

@@ -151,6 +151,11 @@ export default function Navbar({
 
           {/* Dark mode */}
           <button
+          aria-label={
+      dark
+      ? "Switch to light mode"
+      : "Switch to dark mode"
+  }
             onClick={() =>
               setDark(!dark)
             }
